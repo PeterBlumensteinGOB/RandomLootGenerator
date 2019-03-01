@@ -1,0 +1,29 @@
+﻿<Window x:Class="RandomLoot.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RandomLoot"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Label x:Name="headerLabel" Content="LootGenerator" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" FontSize="20"/>
+        <Label x:Name="LocationLbl" Content="Location" HorizontalAlignment="Left" Margin="80,155,0,0" VerticalAlignment="Top" FontSize="10"/>
+        <ComboBox x:Name="LocationCB" HorizontalAlignment="Left" Margin="80,180,0,0" VerticalAlignment="Top" Width="150" FontSize="11" SelectionChanged="LocationCB_SelectionChanged">
+            <ComboBox.ContextMenu>
+                <ContextMenu/>
+
+            </ComboBox.ContextMenu>
+        </ComboBox>
+        <ListView x:Name="itemView" HorizontalAlignment="Left" Height="201" Margin="328,155,0,0" VerticalAlignment="Top" Width="326" SelectionChanged="ItemView_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="BoxName" Width="100" DisplayMemberBinding="{Binding boxName}"/>
+                    <GridViewColumn Header="ItemName" Width="100" DisplayMemberBinding="{Binding itemName}"/>
+                    <GridViewColumn Header="ItemValue" Width="100" DisplayMemberBinding= "{Binding itemValue}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+    </Grid>
+</Window>
