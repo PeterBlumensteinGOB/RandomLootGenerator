@@ -14,6 +14,11 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Globalization;
 using System.Windows.Markup;
+using MySql;
+using MySql.Data.Types;
+using MySql.Data.MySqlClient;
+using MySql.Data.Common;
+using System.Linq;
 
 namespace RandomLoot
 {
@@ -22,10 +27,14 @@ namespace RandomLoot
     /// </summary>
     public partial class MainWindow : Window
     {
-        object lastSelectedItem;
-        lootLocation loot;
+        lootLocation selectedLocation;
+
         Random random = new Random();
         List<windowList> items = new List<windowList>();
+        List<lootLocation> locationList;
+
+        lootSQLResult sQLResult;
+        SqlAbfrage getInformation;
 
         public MainWindow()
         {
@@ -33,17 +42,25 @@ namespace RandomLoot
             CultureInfo cultureInfo = CultureInfo.InstalledUICulture;
             setLanguage(cultureInfo);
 
+            sQLResult = new lootSQLResult();
+
+            //MySqlConnection conn = DBUtils.GetDBConnection();
+            //conn.Open();
+
+
 
             //*******
             // Liste aus der SQL Tabelle mit allen Häusern
             //*******
-
-            List<string> locationList = setHouseType();
+            getInformation = new SqlAbfrage();
+            locationList = getInformation.getLocations(this);
 
             for (int i = 0; i < locationList.Count(); i++)
             {
-                LocationCB.Items.Add(locationList[i]);
+                LocationCB.Items.Add(locationList[i].getLocationName());
             }
+
+            
             
         }
 
@@ -61,57 +78,72 @@ namespace RandomLoot
             }
         }
 
-        public List<string> setHouseType()
-        {
-            List<string> locationList = new List<string>();
-            locationList.Add("Wohnhaus");
-            locationList.Add("Lehmhaus");
-            locationList.Add("Jagdhütte");
-            locationList.Add("Trollhöhle");
-            return locationList;
-        }
+        //public List<lootLocation> SetHouseType()
+        //{
+        //    List<lootLocation> locationList = new List<lootLocation>();
+        //    getInformation = new SqlAbfrage();
+        //    locationList = getInformation.getLocations(this);
+
+
+
+        //    //List<string> locationList = new List<string>();
+        //    //locationList.Add("Wohnhaus");
+        //    //locationList.Add("Lehmhaus");
+        //    //locationList.Add("Jagdhütte");
+        //    //locationList.Add("Trollhöhle");
+        //    return locationList;
+        //}
 
         private void LocationCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(LocationCB.SelectedItem != lastSelectedItem)
+            selectedLocation = locationList.FirstOrDefault(o => o.name == Convert.ToString(LocationCB.SelectedItem));
+            if (selectedLocation != null)
             {
-                lastSelectedItem = LocationCB.SelectedItem;
-                if (lastSelectedItem.ToString() == "Lehmhaus")
-                {
-                    
-                    loot = new lootLocation(lastSelectedItem.ToString(), random.Next(5), random.Next(100, 300), this);
-                }
-                else
+                if (itemView.Items != null)
                 {
                     itemView.Items.Clear();
                 }
+
+                LootBoxCB.Items.Clear();
+                boxView.Items.Clear();
+                
+
+                // Hole dir die LootItems und speichere sie in Objekten
+                sQLResult.clearLootItemsList();
+                sQLResult = getInformation.getItemsOfLocation(selectedLocation.name, this);
+
+                selectedLocation.createLootBoxes(sQLResult);
+                selectedLocation.showLootBoxes(this);
+            }
+            else
+            {
+                itemView.Items.Clear();
             }
         }
 
         public void updateList(string boxNamePar, string itemNamePar, string itemValuePar)
         {
-            //    items.Add(new windowList
-            //    {
-            //        boxName = boxNamePar,
-            //        itemName = itemNamePar,
-            //        itemValue = itemValuePar
-            //    });
-
             itemView.Items.Add(new windowList { boxName = boxNamePar,
                 itemName = itemNamePar,
                 itemValue = itemValuePar });
 
-        }
-
-        private void ItemView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            itemView.Items.Add("10");
+            List<windowList> Items = new List<windowList>();
             
+
+        }
+
+        private void boxView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //object chosenBox = boxView.SelectedItem;
+            string testString = boxView.SelectedItem.ToString();
+            //selectedLocation.showBoxItems(this, boxView.SelectedItems[0]);
+                
+        }
+
+        private void LootBoxCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            itemView.Items.Clear();
+            selectedLocation.showBoxItems(this, LootBoxCB.SelectedItem);
         }
     }
 }

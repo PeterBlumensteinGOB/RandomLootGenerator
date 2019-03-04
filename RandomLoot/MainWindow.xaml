@@ -8,14 +8,20 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Label x:Name="headerLabel" Content="LootGenerator" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" FontSize="20"/>
-        <Label x:Name="LocationLbl" Content="Location" HorizontalAlignment="Left" Margin="80,155,0,0" VerticalAlignment="Top" FontSize="10"/>
-        <ComboBox x:Name="LocationCB" HorizontalAlignment="Left" Margin="80,180,0,0" VerticalAlignment="Top" Width="150" FontSize="11" SelectionChanged="LocationCB_SelectionChanged">
+        <Label x:Name="LocationLbl" Content="Location" HorizontalAlignment="Left" Margin="80,89,0,0" VerticalAlignment="Top" FontSize="10"/>
+        <Label x:Name="LootBoxCBLbl" Content="LootBox" HorizontalAlignment="Left" Margin="80,154,0,0" VerticalAlignment="Top" FontSize="10"/>
+        <ComboBox x:Name="LocationCB" HorizontalAlignment="Left" Margin="80,113,0,0" VerticalAlignment="Top" Width="150" FontSize="11" SelectionChanged="LocationCB_SelectionChanged">
             <ComboBox.ContextMenu>
                 <ContextMenu/>
 
             </ComboBox.ContextMenu>
         </ComboBox>
-        <ListView x:Name="itemView" HorizontalAlignment="Left" Height="201" Margin="328,155,0,0" VerticalAlignment="Top" Width="326" SelectionChanged="ItemView_SelectionChanged">
+        <ComboBox x:Name="LootBoxCB" HorizontalAlignment="Left" Margin="80,180,0,0" VerticalAlignment="Top" Width="150" FontSize="11" SelectionChanged="LootBoxCB_SelectionChanged" >
+            <ComboBox.ContextMenu>
+                <ContextMenu/>
+            </ComboBox.ContextMenu>
+        </ComboBox>
+        <ListView x:Name="itemView" HorizontalAlignment="Left" Height="252" Margin="328,113,0,0" VerticalAlignment="Top" Width="333">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="BoxName" Width="100" DisplayMemberBinding="{Binding boxName}"/>
@@ -24,6 +30,14 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <ListView x:Name="boxView" HorizontalAlignment="Left" Height="119" Margin="80,246,0,0" VerticalAlignment="Top" Width="204" SelectionChanged="boxView_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="BoxName" Width="100" DisplayMemberBinding="{Binding boxName}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        
 
     </Grid>
 </Window>
