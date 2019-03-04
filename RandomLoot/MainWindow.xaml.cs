@@ -70,11 +70,13 @@ namespace RandomLoot
             {
                 headerLabel.Content = "Loot Generator";
                 LocationLbl.Content = "Location:";
+                LootBoxCBLbl.Content = "Lootbox:";
             }
             else
             {
                 headerLabel.Content = "Beutegenerator";
                 LocationLbl.Content = "Ort:";
+                LootBoxCBLbl.Content = "Beutekiste:";
             }
         }
 
@@ -96,6 +98,9 @@ namespace RandomLoot
 
         private void LocationCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            LootBoxCB.Items.Clear();
+            boxView.Items.Clear();
+
             selectedLocation = locationList.FirstOrDefault(o => o.name == Convert.ToString(LocationCB.SelectedItem));
             if (selectedLocation != null)
             {
@@ -104,8 +109,7 @@ namespace RandomLoot
                     itemView.Items.Clear();
                 }
 
-                LootBoxCB.Items.Clear();
-                boxView.Items.Clear();
+               
                 
 
                 // Hole dir die LootItems und speichere sie in Objekten
@@ -135,7 +139,7 @@ namespace RandomLoot
         private void boxView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //object chosenBox = boxView.SelectedItem;
-            string testString = boxView.SelectedItem.ToString();
+            //string testString = boxView.SelectedItem.ToString();
             //selectedLocation.showBoxItems(this, boxView.SelectedItems[0]);
                 
         }

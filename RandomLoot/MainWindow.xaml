@@ -33,7 +33,8 @@
         <ListView x:Name="boxView" HorizontalAlignment="Left" Height="119" Margin="80,246,0,0" VerticalAlignment="Top" Width="204" SelectionChanged="boxView_SelectionChanged">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="BoxName" Width="100" DisplayMemberBinding="{Binding boxName}"/>
+                    <GridViewColumn Header="Lootbox" Width="100" DisplayMemberBinding="{Binding boxName}"/>
+                    <GridViewColumn Header="Maximum Value" Width="100" DisplayMemberBinding="{Binding maxBoxValue}"/>
                 </GridView>
             </ListView.View>
         </ListView>
