@@ -100,6 +100,8 @@ namespace RandomLoot
         {
             LootBoxCB.Items.Clear();
             boxView.Items.Clear();
+            itemView.Items.Clear();
+
 
             selectedLocation = locationList.FirstOrDefault(o => o.name == Convert.ToString(LocationCB.SelectedItem));
             if (selectedLocation != null)

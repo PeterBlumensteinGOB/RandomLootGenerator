@@ -25,7 +25,7 @@ namespace RandomLoot
 
         public void createLootBoxes(lootSQLResult sQLResult)
         {
-
+            lootBoxesList.Clear();
 
             int maxValueBox = maxValueLoc;
             int numberOfLootBoxes = random.Next(1, maxLootBoxes + 1);
